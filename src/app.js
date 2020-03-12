@@ -40,13 +40,13 @@ db.on('connect', function () {
 }); */
 //db connection
 mongoose
-	.connect(config.MONGO_URI_ATLAS, {
-		//useUnifiedTopology: true,
-		//useNewUrlParser: true,
-		//useCreateIndex: true
+	.connect(config.MONGO_URI_LOCAL, {
+		useUnifiedTopology: true,
+		useNewUrlParser: true,
+		useCreateIndex: true
 	})
-	.then(() => console.log('DB Connected')).catch(err => console.log(err.message)
-    );
+	.then(() => console.log('DB Connected'))
+	.catch(err => console.log(err.message));
 
 // Catch all connections errors with an event of type error
 mongoose.connection.on('error', (err) => {
@@ -62,7 +62,7 @@ app.use(bodyParser.json());
 // TODO: API DOC for all available resources
 //app.use('/api/v1/', soundEndpointsDocs);
 
-app.use('/api/v1/sounds', soundRoute);
+app.use('/sounds', soundRoute);
 
 //app.use('/api/v1/sounds', soundRoute);
 
