@@ -10,7 +10,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const soundRoute = require('./routes/soundRoute');
-const config = require('./Config/index');
+const config = require('./config/index');
+const soundRouter = require('./routes/soundRoute')
 const cors = require('cors');
 const soundEndpointsDocs = require('./docs/soundEndpoints');
 
@@ -62,7 +63,7 @@ app.use(bodyParser.json());
 // TODO: API DOC for all available resources
 //app.use('/api/v1/', soundEndpointsDocs);
 
-app.use('/sounds', soundRoute);
+app.use('/sounds', soundRouter);
 
 //app.use('/api/v1/sounds', soundRoute);
 
