@@ -6,15 +6,19 @@ const Sound = require('../models/sound');
  * @param {*} res
  */
 module.exports.allSound = async (req, res) => {
-	await Sound.find({}, (err, sounds) => {
-		if (err) {
-			res.status(500);
-			res.json({
-				message: 'Something went wrong on the server !'
-			});
-		}
-		return res.send(res.json(sounds));
-	});
+	try {
+		await Sound.find({}, (err, sounds) => {
+			if (err) {
+				res.status(500);
+				res.json({
+					message: 'Something went wrong on the server !'
+				});
+			}
+			return res.send(res.json(sounds));
+		});
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 /**
@@ -23,15 +27,19 @@ module.exports.allSound = async (req, res) => {
  * @param {*} res
  */
 module.exports.getASound = async (req, res) => {
-	await Sound.findById({ _id: req.params.sound_id }, (err, sound) => {
-		if (err) {
-			res.status(400);
-			res.json({
-				message: `Sound with id ${req.params.sound_id} does not exist in our database.`
-			});
-		}
-		return res.send(res.json(sound));
-	});
+	try {
+		await Sound.findById({ _id: req.params.sound_id }, (err, sound) => {
+			if (err) {
+				res.status(400);
+				res.json({
+					message: `Sound with id ${req.params.sound_id} does not exist in our database.`
+				});
+			}
+			return res.send(res.json(sound));
+		});
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 /**
@@ -40,7 +48,7 @@ module.exports.getASound = async (req, res) => {
  * @param {*} res
  */
 module.exports.createASound = async (req, res) => {
-	const newSound = new Sound();
+	const newSound = new Sound(req.body);
 	if (err) {
 		res.status(500);
 		res.json({
@@ -49,7 +57,20 @@ module.exports.createASound = async (req, res) => {
 	}
 
 	// Save on the DB
-	newSound.save();
+	newSound.save((err, sound) => {
+
+        if (err) {
+            res.status(500);
+            res.json({
+                message: `Something went wrong on the server when trying to create the sound.`
+            })
+        }
+        res.status(201);
+        res.json({
+            sound,
+            message: `Sound with id ${sound._id} was created successfully !`
+        })
+    });
 };
 
 /**
@@ -74,7 +95,7 @@ module.exports.deleteASound = async (req, res) => {
 		}
 
 		return res.send({
-            sound : soundToDel,
+			sound: soundToDel,
 			message: `Sound with id ${soundToDel._id} is deleted successfully !`
 		});
 	});
