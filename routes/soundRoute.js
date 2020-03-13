@@ -1,27 +1,27 @@
 const express = require('express');
-const { allSound, getASound, createASound, updateASound, deleteASound } = require('../controllers/soundController');
+const { allSound, getSoundById, createASound, updateASound, deleteASound } = require('../controllers/soundController');
 
 // Grab the express Router
 const router = express.Router();
 /**
  * ALl possible getRoutes for a sound
  */
-router.get('/sounds', allSound);
-router.get('/sounds/:sound_id', getASound);
+router.get('/', allSound);
+router.get('/:sound_id', getSoundById);
 
 /**
  * All possible Routes for creating a sound
  */
-router.post('/sounds', createASound);
+router.post('/', createASound);
 
 /**
  * All possible Routes for updating a sound
  */
-router.put('/sounds/:sound_id', updateASound);
+router.put('/:sound_id', updateASound);
 
 /**
  * All possible Routes for deleting a sound
  */
-router.delete('/sounds/:sound_id', deleteASound);
+router.delete('/:sound_id', deleteASound);
 
 module.exports = router;

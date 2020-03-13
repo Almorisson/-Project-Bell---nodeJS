@@ -58,10 +58,10 @@ app.use(bodyParser.json());
 // TODO: API DOC for all available resources
 //app.use('/api/v1/', soundEndpointsDocs);
 
-app.use('/sounds', soundRouter);
+app.use('/api/v1/sounds', soundRouter);
 
 //app.use('/api/v1/sounds', soundRoute);
 
 app.listen(PORT, HOST, () => {
-	console.log(`Server is listening on ${HOST}:${PORT}`);
+	console.log(`Server is listening on http://${HOST}:${PORT}`);
 });
