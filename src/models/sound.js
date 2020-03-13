@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const soundSchema = mongoose.Schema({
+const SoundSchema = mongoose.Schema({
 	name: {
 		type: String,
 		required: true
@@ -11,4 +11,4 @@ const soundSchema = mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Sound', soundSchema);
+module.exports = mongoose.model('Sound', SoundSchema);

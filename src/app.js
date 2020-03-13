@@ -9,7 +9,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const soundRoute = require('./routes/soundRoute');
 const config = require('./config/index');
 const soundRouter = require('./routes/soundRoute')
 const cors = require('cors');
@@ -29,19 +28,12 @@ const HOST = config.HOST || '0.0.0.0';
 const PORT = config.PORT || 5000;
 
 const app = express();
-
+// using Cors 
 app.use(cors());
 
-/* db.on('error', function (err) {
-  console.log('database error', err);
-});
-
-db.on('connect', function () {
-  console.log('database connected');
-}); */
-//db connection
+//DB connection
 mongoose
-	.connect(config.MONGO_URI_LOCAL, {
+	.connect(config.MONGO_URI_ATLAS, {
 		useUnifiedTopology: true,
 		useNewUrlParser: true,
 		useCreateIndex: true
@@ -54,6 +46,9 @@ mongoose.connection.on('error', (err) => {
 	console.log(`DB connection error: ${err.message}`);
 });
 
+/**
+ * Using body-parser middleware
+ */
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 

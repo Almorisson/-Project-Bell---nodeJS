@@ -5,7 +5,7 @@ const Sound = require('../models/sound');
  * @param {*} req
  * @param {*} res
  */
-module.exports.allSound = async (req, res) => {
+exports.allSound = async (req, res) => {
 	try {
 		await Sound.find({}, (err, sounds) => {
 			if (err) {
@@ -26,7 +26,7 @@ module.exports.allSound = async (req, res) => {
  * @param {*} req
  * @param {*} res
  */
-module.exports.getASound = async (req, res) => {
+exports.getASound = async (req, res) => {
 	try {
 		await Sound.findById({ _id: req.params.sound_id }, (err, sound) => {
 			if (err) {
@@ -47,7 +47,7 @@ module.exports.getASound = async (req, res) => {
  * @param {*} req
  * @param {*} res
  */
-module.exports.createASound = async (req, res) => {
+exports.createASound = async (req, res) => {
 	const newSound = new Sound(req.body);
 	if (err) {
 		res.status(500);
@@ -78,14 +78,14 @@ module.exports.createASound = async (req, res) => {
  * @param {*} req
  * @param {*} res
  */
-module.exports.updateASound = async (req, res) => {};
+exports.updateASound = async (req, res) => {};
 
 /**
  * Update an existing Sound - May send metadata if necessary
  * @param {*} req
  * @param {*} res
  */
-module.exports.deleteASound = async (req, res) => {
+exports.deleteASound = async (req, res) => {
 	const soundToDel = await Sound.findById({ _id: req.params.sound_id }, (err, sound) => {
 		if (err) {
 			res.status(500);

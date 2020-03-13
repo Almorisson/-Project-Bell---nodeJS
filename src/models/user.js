@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const emailValidator = require('email-validator');
+const bcrypt = require('bcrypt');
 
-const userSchema = mongoose.Schema({
+const UserSchema = mongoose.Schema({
 	name: {
 		type: String,
 		required: true
@@ -20,24 +21,24 @@ const userSchema = mongoose.Schema({
 	}
 });
 
-SoundSchema.methods.comparePassword = function(password) {
+UserSchema.methods.comparePassword = function(password) {
 	return bcrypt.compareSync(password, this.password);
 };
 
-SoundSchema.methods.validateEmail = function(email) {
-	return validator.validate(email);
+UserSchema.methods.validateEmail = function(email) {
+	return emailValidator.validate(email);
 };
 
 // Validators and manipulation methods for password
-SoundSchema.methods.encryptPassword = async (password) => {
+UserSchema.methods.encryptPassword = async (password) => {
 	const salt = await bcrypt.genSalt(5);
 	const hash = await bcrypt.hash(password, salt);
 	return hash;
 };
 
-SoundSchema.methods.validPassword = async function(candidatePassword) {
+UserSchema.methods.validPassword = async function(candidatePassword) {
 	const result = bcrypt.compare(candidatePassword, this.password);
 	return result;
 };
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', UserSchema);
