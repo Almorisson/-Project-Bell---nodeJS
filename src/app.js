@@ -13,9 +13,6 @@ const config = require('./config/index');
 const soundRouter = require('./routes/soundRoute')
 const cors = require('cors');
 const soundEndpointsDocs = require('./docs/soundEndpoints');
-//const dotenv = require('dotenv');
-
-//dotenv.config();
 
 //const mongojs = require('mongojs');
 // const db = mongojs('mydb');
@@ -27,16 +24,16 @@ const soundEndpointsDocs = require('./docs/soundEndpoints');
 /**
  * All Constants that we mainly use in the project
  */
-const HOST = process.env.HOST || '0.0.0.0';
-const PORT = process.env.PORT || 5000;
+const HOST = config.HOST || '0.0.0.0';
+const PORT = config.PORT || 5000;
 
 const app = express();
-// using Cors
+// using Cors 
 app.use(cors());
 
 //DB connection
 mongoose
-	.connect(process.env.MONGO_URI_LOCAL, {
+	.connect(config.MONGO_URI_ATLAS, {
 		useUnifiedTopology: true,
 		useNewUrlParser: true,
 		useCreateIndex: true
@@ -61,9 +58,9 @@ app.use(bodyParser.json());
 // TODO: API DOC for all available resources
 //app.use('/api/v1/', soundEndpointsDocs);
 
-// Sound Routes
 app.use('/sounds', soundRouter);
 
+//app.use('/api/v1/sounds', soundRoute);
 
 app.listen(PORT, HOST, () => {
 	console.log(`Server is listening on ${HOST}:${PORT}`);
