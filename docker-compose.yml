@@ -7,11 +7,11 @@ services:
     command:
       - /bin/sh
       - '-c'
-      - 'npm i && npm run dev'
+      - 'npm i && npm run start'
     ports:
       - '3000:3000'
     volumes:
-      - './src:/home/node/app'
+      - '.:/home/node/app'
     links:
       - mongo
     networks:
