@@ -2,10 +2,10 @@
   "name": "src",
   "version": "1.0.0",
   "description": "",
-  "main": "src/app.js",
+  "main": "app.js",
   "engines": {
-    "node": "v12.13.0",
-    "npm": "6.13.7"
+      "node": "v12.13.0",
+      "npm": "6.13.7"
   },
   "scripts": {
     "dev": "nodemon -L app.js"
