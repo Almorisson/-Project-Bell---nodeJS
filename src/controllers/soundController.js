@@ -50,12 +50,12 @@ exports.getASound = async (req, res) => {
 exports.createASound = async (req, res, next) => {
 	try {
 		const newSound = new Sound(req.body);
-		if (err) {
+		/* if (err) {
 			res.status(500);
 			res.json({
 				message: `Something went wrong on the server when trying to create the sound.`
 			});
-		}
+		} */
 
 		newSound.name = await req.body.name;
 		newSound.link = await req.body.link;
