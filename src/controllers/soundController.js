@@ -47,30 +47,36 @@ exports.getASound = async (req, res) => {
  * @param {*} req
  * @param {*} res
  */
-exports.createASound = async (req, res) => {
-	const newSound = new Sound(req.body);
-	if (err) {
-		res.status(500);
-		res.json({
-			message: `Something went wrong on the server when trying to create the sound.`
+exports.createASound = async (req, res, next) => {
+	try {
+		const newSound = new Sound(req.body);
+		if (err) {
+			res.status(500);
+			res.json({
+				message: `Something went wrong on the server when trying to create the sound.`
+			});
+		}
+
+		newSound.name = await req.body.name;
+		newSound.link = await req.body.link;
+
+		// Save on the DB
+		newSound.save((err, sound) => {
+			if (err) {
+				res.status(500);
+				res.json({
+					message: `Something went wrong on the server when trying to create the sound.`
+				});
+			}
+			res.status(201);
+			res.json({
+				sound,
+				message: `Sound with id ${sound._id} was created successfully !`
+			});
 		});
+	} catch (error) {
+		next(error);
 	}
-
-	// Save on the DB
-	newSound.save((err, sound) => {
-
-        if (err) {
-            res.status(500);
-            res.json({
-                message: `Something went wrong on the server when trying to create the sound.`
-            })
-        }
-        res.status(201);
-        res.json({
-            sound,
-            message: `Sound with id ${sound._id} was created successfully !`
-        })
-    });
 };
 
 /**
