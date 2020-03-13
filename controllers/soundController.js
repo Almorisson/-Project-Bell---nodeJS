@@ -86,8 +86,7 @@ exports.updateASound = async (req, res) => {};
  * @param {*} res
  */
 exports.deleteASound = async (req, res) => {
-
-	const soundToDel = await Sound.findByIdAndUpdate({ _id: req.params.sound_id }, (err, sound) => {
+	const soundToDel = await Sound.findById({ _id: req.params.sound_id }, (err, sound) => {
 		if (err) {
 			res.status(500);
 			res.json({
