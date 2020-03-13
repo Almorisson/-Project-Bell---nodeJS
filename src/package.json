@@ -2,7 +2,7 @@
   "name": "src",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "src/app.js",
   "engines": {
       "node": "v12.13.0",
       "npm": "6.13.7"
