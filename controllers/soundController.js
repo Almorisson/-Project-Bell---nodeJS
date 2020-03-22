@@ -106,8 +106,8 @@ exports.updateASound = async (req, res, next) => {
 			});
 		} else {
 			await Sound.updateOne(
-				{_id: soundToUpdate._id },
-				{ title: req.body.title ,link: req.body.link },
+				{ _id: soundToUpdate._id },
+				{ title: req.body.title, link: req.body.link },
 				(err, sound) => {
 					if (err) {
 						res.status(500);
@@ -143,7 +143,7 @@ exports.deleteASound = async (req, res, next) => {
 				message: `Sound with id ${req.params.sound_id} you are trying to delete, does not exist in our DB.`
 			});
 		} else {
-			await Sound.findByIdAndRemove({ _id: req.params.sound_id }, (err, sound) => {
+			await Sound.findByIdAndRemove({ _id: req.params.sound_id }, { useFindAndModify: false }, (err, sound) => {
 				if (err) {
 					res.status(500);
 					res.json({
