@@ -24,8 +24,8 @@ const soundEndpointsDocs = require('./docs/soundEndpoints');
 /**
  * All Constants that we mainly use in the project
  */
-const HOST = config.HOST || '0.0.0.0';
-const PORT = config.PORT || 5000;
+const HOST = config.HOST || process.env.HOST;
+const PORT = config.PORT || process.env.PORT;
 
 const app = express();
 // using Cors
