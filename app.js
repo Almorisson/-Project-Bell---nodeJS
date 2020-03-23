@@ -12,6 +12,7 @@ const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const config = require('./config');
 const soundRouter = require('./routes/soundRoute');
+const userRouter = require('./routes/userRoute');
 const apiDocsRouter = require('./routes/apiDocsRoutes');
 const cors = require('./node_modules/cors');
 const { errors } = require('./middlewares/errorHandler');
@@ -67,8 +68,10 @@ app.use(passport.initialize());
 
 // API Docs routes
 app.use('/api/v1/docs', apiDocsRouter);
-//Sound routes
+// Sound routes
 app.use('/api/v1/sounds', soundRouter);
+// User Routes
+app.use('/api/v1/users', userRouter);
 
 app.use(errors);
 
