@@ -2,24 +2,26 @@ const mongoose = require('mongoose');
 const emailValidator = require('email-validator');
 const bcrypt = require('bcrypt');
 
-const UserSchema = mongoose.Schema({
-	name: {
-		type: String,
-		required: true
+const UserSchema = mongoose.Schema(
+	{
+		fullName: {
+			type: String,
+			required: true,
+			minLength: 6,
+			maxLength: 50
+		},
+		email: {
+			type: String,
+			required: true,
+			unique: true
+		},
+		password: {
+			type: String,
+			required: true
+		}
 	},
-	email: {
-		type: String,
-		required: true
-	},
-	password: {
-		type: String,
-		required: true
-	},
-	passwordConfirmation: {
-		type: String,
-		required: false
-	}
-}, { versionKey: false });
+	{ versionKey: false }
+);
 
 UserSchema.methods.comparePassword = function(password) {
 	return bcrypt.compareSync(password, this.password);
