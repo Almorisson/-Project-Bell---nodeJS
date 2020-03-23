@@ -24,8 +24,8 @@ const soundEndpointsDocs = require('./docs/soundEndpoints');
 /**
  * All Constants that we mainly use in the project
  */
-const HOST = config.HOST || '0.0.0.0';
-const PORT = config.PORT || 5000;
+const HOST = config.HOST || process.env.HOST;
+const PORT = config.PORT || process.env.PORT;
 
 const app = express();
 // using Cors
@@ -58,10 +58,10 @@ app.use(bodyParser.json());
 // TODO: API DOC for all available resources
 //app.use('/api/v1/', soundEndpointsDocs);
 
-app.use('/sounds', soundRouter);
+app.use('/api/v1/sounds', soundRouter);
 
 //app.use('/api/v1/sounds', soundRoute);
 
 app.listen(PORT, HOST, () => {
-	console.log(`Server is listening on ${HOST}:${PORT}`);
+	console.log(`Server is listening on http://${HOST}:${PORT}`);
 });

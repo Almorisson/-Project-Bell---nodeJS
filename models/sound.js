@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const SoundSchema = mongoose.Schema({
-	name: {
+	title: {
 		type: String,
 		required: true
 	},
@@ -9,6 +9,6 @@ const SoundSchema = mongoose.Schema({
         type: String,
         required: true
     }
-});
+}, { versionKey: false });
 
 module.exports = mongoose.model('Sound', SoundSchema);
