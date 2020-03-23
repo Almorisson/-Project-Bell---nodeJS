@@ -1,6 +1,8 @@
 version: '3.3'
 services:
   node:
+    env_file:
+      - ./.env
     container_name: project_node
     image: 'node:latest'
     working_dir: /home/node/app
