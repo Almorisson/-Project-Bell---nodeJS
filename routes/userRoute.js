@@ -1,27 +1,26 @@
 const express = require('express');
-const User = require('../models/user');
-const { } = require('../controllers/userController');
-
+const { register, login, logout, update, getAllUsers, getUserById, findUserById, unregister } = require('../controllers/userController');
+const { isEmail, hasPassword, hasFullName } = require('../validations/validators');
+const { authenticate } = require('../middlewares/authHelper');
 // Grab the express Router
 const router = express.Router();
 
-// register controller
-exports.register = async (req, res) => {
+router.post('/register', [hasFullName, isEmail, hasPassword], register);
 
-    try {
+router.post('/login', [isEmail, hasPassword], login);
 
-        const existingUser = await User.findOne({ email: req.body.email })
+router.get('/logout', authenticate, logout);
 
-        if (existingUser) {
-            const error = new Error("Email is already in used!")
-            error.statusCode = 403;
-            throw error;
-        }
+router.get('/:user_id', authenticate, getUserById); // Get the current authenticate user
 
-        customer = await customer.save();
-    } catch (error) {
-        console.log(err);
-    }
-}
+router.put('/:user_id', authenticate, update);
+    
+router.delete('/:user_id', authenticate, unregister);
+
+router.get('/', getAllUsers);
+
+
+// Allow to  check is still authenticate in its account before doing some delicate operations (e.g: delete, update, etc)
+router.param('user_id', findUserById);
 
 module.exports = router;

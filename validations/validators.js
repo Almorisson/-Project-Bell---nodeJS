@@ -39,11 +39,11 @@ exports.isCorrectTitle = (req, res, next) => {
 	next();
 };
 
-exports.isEmail = check('email').isEmail().withMessage('Please, fill with a valid email.');
+exports.isEmail = check('email').isEmail().notEmpty().withMessage('Please, fill with a valid email.');
 
 exports.hasPassword = check('password').exists().withMessage('The password field is required.');
 
-exports.hasName = check('name').isLength({ min: 5 }).withMessage('The name field is required. 5 characters minimum.');
+exports.hasFullName = check('fullName').isLength({ min: 5 }).withMessage('The name field is required. 5 characters minimum.');
 
 exports.passwordRegex = (req, res, next) => {
 	// check for password
