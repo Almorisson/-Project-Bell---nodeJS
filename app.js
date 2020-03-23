@@ -6,13 +6,20 @@
 /**
  * Imports all dependency libs
  */
-const express = require('./node_modules/express');
-const bodyParser = require('./node_modules/body-parser');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
-const config = require('./Config/index');
-const soundRouter = require('./routes/soundRoute')
+const config = require('./config');
+const soundRouter = require('./routes/soundRoute');
+const userRouter = require('./routes/userRoute');
+const apiDocsRouter = require('./routes/apiDocsRoutes');
 const cors = require('./node_modules/cors');
-const soundEndpointsDocs = require('./docs/soundEndpoints');
+const { errors } = require('./middlewares/errorHandler');
+var passport = require('passport');
+
+require('./middlewares/passport');
+
 
 //const mongojs = require('mongojs');
 // const db = mongojs('mydb');
@@ -24,8 +31,8 @@ const soundEndpointsDocs = require('./docs/soundEndpoints');
 /**
  * All Constants that we mainly use in the project
  */
-const HOST = config.HOST || process.env.HOST;
-const PORT = config.PORT || process.env.PORT;
+const HOST = config.HOST;
+const PORT = config.PORT;
 
 const app = express();
 // using Cors
@@ -51,17 +58,27 @@ mongoose.connection.on('error', (err) => {
  */
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cookieParser());
+
+app.use(passport.initialize());
 
 /**
  * Calling all routes
  */
-// TODO: API DOC for all available resources
-//app.use('/api/v1/', soundEndpointsDocs);
 
+// API Docs routes
+app.use('/api/v1/docs', apiDocsRouter);
+// Sound routes
 app.use('/api/v1/sounds', soundRouter);
+// User Routes
+app.use('/api/v1/users', userRouter);
 
-//app.use('/api/v1/sounds', soundRoute);
+app.use(errors);
 
 app.listen(PORT, HOST, () => {
-	console.log(`Server is listening on http://${HOST}:${PORT}`);
+    if (process.env.NODE_ENV === "production") {
+        console.log(`Server is listening on https://${HOST}:${PORT}`);
+    } else {
+        console.log(`Server is listening on http://${HOST}:${PORT}`);
+    }
 });
