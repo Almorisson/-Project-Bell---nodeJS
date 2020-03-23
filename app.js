@@ -10,7 +10,8 @@ const express = require('./node_modules/express');
 const bodyParser = require('./node_modules/body-parser');
 const mongoose = require('mongoose');
 const config = require('./Config/index');
-const soundRouter = require('./routes/soundRoute')
+const soundRouter = require('./routes/soundRoute');
+const apiDocsRouter = require('./routes/apiDocsRoutes');
 const cors = require('./node_modules/cors');
 const soundEndpointsDocs = require('./docs/soundEndpoints');
 
@@ -55,12 +56,13 @@ app.use(bodyParser.json());
 /**
  * Calling all routes
  */
-// TODO: API DOC for all available resources
-//app.use('/api/v1/', soundEndpointsDocs);
+
+// API DOC for all available resources
+app.use('/api/v1/docs', apiDocsRouter);
 
 app.use('/api/v1/sounds', soundRouter);
 
-//app.use('/api/v1/sounds', soundRoute);
+
 
 app.listen(PORT, HOST, () => {
 	console.log(`Server is listening on http://${HOST}:${PORT}`);
